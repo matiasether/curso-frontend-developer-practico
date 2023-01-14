@@ -4,15 +4,38 @@ const desktopUserAccountMenu = document.querySelector('.desktop-menu')
 const mobileMenu = document.querySelector('.mobile-menu');
 const iconMenuMobile = document.querySelector('.menu');
 
-//Muestra/quita el menu de cuenta de usuario al darle click al email
+const iconShoppingCart = document.querySelector('.icon-shopping-cart');
+const menuShoppingCart = document.querySelector('.product-detail')
+
+const disableMenu = element => {
+    element ? element.classList.add('inactive') : console.log('El elemento no existe')
+}
+
+const enableMenu = element => {
+    element ? element.classList.toggle('inactive') : console.log('El elemento no existe')
+}
+
+//Interruptor del menu de cuenta de usuario al darle click al email
 const toggleDesktopUserAccountMenu = () => {
-    desktopUserAccountMenu.classList.toggle('inactive')
+    disableMenu(menuShoppingCart);
+    disableMenu(mobileMenu);
+    enableMenu(desktopUserAccountMenu);
 }
 desktopEmailMenu.addEventListener('click', toggleDesktopUserAccountMenu);
 
-
-//Muestra/quita el menu mobile al darle click
+//Interruptor del menu mobile
 const toggleMenuMobile = () => {
-    mobileMenu.classList.toggle('inactive')
+    disableMenu(menuShoppingCart);
+    enableMenu(mobileMenu)
+    
 }
 iconMenuMobile.addEventListener('click', toggleMenuMobile)
+
+//Interruptor del menu de carrito de compras
+const toggleCartMenu = () => {
+    disableMenu(mobileMenu);
+    disableMenu(desktopUserAccountMenu)
+    enableMenu(menuShoppingCart)
+}
+iconShoppingCart.addEventListener('click', toggleCartMenu)
+
