@@ -2,7 +2,7 @@ const desktopEmailMenu = document.querySelector('.navbar-email');
 const desktopUserAccountMenu = document.querySelector('.desktop-menu')
 
 const mobileMenu = document.querySelector('.mobile-menu');
-const iconMenuMobile = document.querySelector('.menu');
+const iconMenuMobile = document.querySelector('.iconMenuMobile');
 
 const iconShoppingCart = document.querySelector('.icon-shopping-cart');
 const menuShoppingCart = document.querySelector('.product-detail')
@@ -36,12 +36,16 @@ const toggleCartMenu = () => {
 }
 iconShoppingCart.addEventListener('click', toggleCartMenu)
 
+//Cierra todos los menus abiertos en el display al hacer click en cualquier lugar
 const closeAllMenus = () => {
     disableMenu(desktopUserAccountMenu);
     disableMenu(mobileMenu);
     disableMenu(menuShoppingCart);
 }
 document.addEventListener('click', (event) => {
-    if(event.target.classList.contains('menu')||event.target.classList.contains('navbar-email')||event.target.classList.contains('icon-shopping-cart')) return;
+    if( event.target.classList.contains('iconMenuMobile')
+        || event.target.classList.contains('navbar-email')
+        || event.target.classList.contains('icon-shopping-cart')) 
+    return; 
     closeAllMenus();
 });
