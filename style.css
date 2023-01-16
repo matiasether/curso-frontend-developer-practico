@@ -238,6 +238,8 @@
   }
   .product-card {
     width: 240px;
+    cursor: pointer;
+    padding-top: 20px;
   }
   .product-card img {
     width: 240px;

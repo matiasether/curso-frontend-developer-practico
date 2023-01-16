@@ -49,20 +49,7 @@ document.addEventListener('click', (event) => {
     return; 
     closeAllMenus();
 });
-/*
-<div class="product-card">
-    <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
-    <div class="product-info">
-        <div>
-            <p>$120,00</p>
-            <p>Bike</p>
-        </div>
-        <figure>
-            <img src="./icons/bt_add_to_cart.svg" alt="">
-        </figure>
-    </div>
-</div>
-*/
+//Funcion principal creadora de los productos
 const createCard = (productName, productPrice, imgSrc ) => {
     const mainCardsContainer = document.querySelector(".cards-container")
 
@@ -73,7 +60,8 @@ const createCard = (productName, productPrice, imgSrc ) => {
 
         //Imagen del producto
         const cardImg = document.createElement('img');
-        cardImg.src = imgSrc
+        const getImgSrc = imgSrc => `./img/${imgSrc}`;
+        cardImg.src = getImgSrc(imgSrc)
         cardContainer.append(cardImg)
 
         //Contenedor del producto
@@ -95,7 +83,7 @@ const createCard = (productName, productPrice, imgSrc ) => {
 
                 createDiv.append(productPriceContainer, productNameContainer)
             
-            //Container del botón Add to Cart
+            //Contenedor del botón Add to Cart
             const figureContainer = document.createElement('figure');
             productInfo.append(figureContainer);
                 const btnAddCart = document.createElement('img')
@@ -103,7 +91,10 @@ const createCard = (productName, productPrice, imgSrc ) => {
                 figureContainer.append(btnAddCart)
 } 
 
-createCard("Globo Terraqueo", "$350" ,"https://images.pexels.com/photos/1236421/pexels-photo-1236421.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-createCard("Tablero de Ajedrez", "$420", "https://images.pexels.com/photos/4973821/pexels-photo-4973821.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-createCard("Conejo de peluche", "$40" ,"https://images.pexels.com/photos/6156899/pexels-photo-6156899.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-createCard("Telefono vintage", "$65", "https://images.pexels.com/photos/10605229/pexels-photo-10605229.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+const products = [
+    {name: "Globo Terraqueo", price: "$350", img: "globo.jpeg"},
+    {name: "Tablero de Ajedrez", price: "$420", img: "ajedrez.jpeg"},
+    {name: "Conejo de Peluche", price: "$40", img: "peluche.jpeg"},
+    {name: "Telefono Vintage", price: "$65", img: "telefono.jpeg"},
+]
+products.forEach(product => createCard(product.name, product.price, product.img))
