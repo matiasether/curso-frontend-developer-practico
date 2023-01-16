@@ -13,7 +13,7 @@ const disableMenu = element => {
 const enableMenu = element => {
     element ? element.classList.toggle('inactive') : console.log('El elemento no existe')
 }
-//Interruptor del menu de cuenta de usuario al darle click al email
+//Interruptor del menu de cuenta de usuario al darle click al email de usuario
 const toggleDesktopUserAccountMenu = () => {
     disableMenu(menuShoppingCart);
     disableMenu(mobileMenu);
@@ -49,7 +49,7 @@ document.addEventListener('click', (event) => {
     return; 
     closeAllMenus();
 });
-//Funcion principal creadora de los productos
+//Funcion principal creador de los productos en el DOM
 const createCard = (productName, productPrice, imgSrc ) => {
     const mainCardsContainer = document.querySelector(".cards-container")
 
@@ -58,32 +58,35 @@ const createCard = (productName, productPrice, imgSrc ) => {
     cardContainer.setAttribute('class', 'product-card')
     mainCardsContainer.append(cardContainer)
 
-        //Imagen del producto
+        //Crea el elemento de producto de imagen
+        // el src de la img se obtiene del parametro de la funcion principal (imgSrc)
         const cardImg = document.createElement('img');
         const getImgSrc = imgSrc => `./img/${imgSrc}`;
         cardImg.src = getImgSrc(imgSrc)
         cardContainer.append(cardImg)
 
-        //Contenedor del producto
+        //Crea el contenedor del nombre e imagen del producto a (class="product-card")
         const productInfo = document.createElement("div");
         productInfo.setAttribute('class', 'product-info')
         cardContainer.append(productInfo)
 
-            //Contenedor de nombre y precio del producto
+            //Contenedor de los elementos nombre y precio del producto
             const createDiv = document.createElement("div");
             productInfo.append(createDiv);
 
-                //Precio del producto
+                //Crea el elemento del PRECIO del producto
+                //se obtiene del parametro de la funcion principal (productPrice)
                 const productPriceContainer = document.createElement('p');
                 productPriceContainer.innerText = productPrice;
 
-                //Nombre del producto
+                //Crea el elemento del NOMBRE del producto
+                //se obtiene del parametro de la funcion principal (productName)
                 const productNameContainer = document.createElement('p')
                 productNameContainer.innerText = productName
 
                 createDiv.append(productPriceContainer, productNameContainer)
             
-            //Contenedor del botón Add to Cart
+            //Crea el boton "Add to Cart" y lo agrega a su nodo padre (class="product-info").
             const figureContainer = document.createElement('figure');
             productInfo.append(figureContainer);
                 const btnAddCart = document.createElement('img')
