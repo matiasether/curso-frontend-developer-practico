@@ -53,7 +53,7 @@ document.addEventListener('click', (event) => {
 const createCard = (productName, productPrice, imgSrc ) => {
     const mainCardsContainer = document.querySelector(".cards-container")
 
-    //Contenedor principal de la tarjeta del producto
+    //Contenedor principal
     const cardContainer = document.createElement("div");
     cardContainer.setAttribute('class', 'product-card')
     mainCardsContainer.append(cardContainer)
@@ -100,4 +100,39 @@ const products = [
     {name: "Conejo de Peluche", price: "$40", img: "peluche.jpeg"},
     {name: "Telefono Vintage", price: "$65", img: "telefono.jpeg"},
 ]
-products.forEach(product => createCard(product.name, product.price, product.img))
+products.forEach((product, index) => {
+    createCard(product.name, product.price, product.img);
+    const card = document.querySelector(`#product-card-${index}`);
+    card.setAttribute("data-product-id", index);
+});
+
+const selectProduct = event => {
+    const productId = event.target.getAttribute("data-product-id");
+    const product = products[productId];
+    console.log(product);
+    toggleDetailProductCard();
+    showItemSelected(product);
+}
+
+// Iterar sobre cada elemento seleccionado y agregarle el evento de click
+const productCards = document.querySelectorAll('.product-card');
+
+productCards.forEach(productCard => {
+    productCard.addEventListener('click', selectProduct);
+});
+
+const productDetail = document.querySelector("#product-detail")
+
+const toggleDetailProductCard = () => {
+    enableMenu(productDetail)
+}
+const showItemSelected = product => {
+    const productDetailImage = document.querySelector("#product-detail-image");
+    const productDetailPrice = document.querySelector("#product-detail-price");
+    const productDetailName = document.querySelector("#product-detail-name");
+    const productDetailInfo = document.querySelector("#product-detail-info")
+    productDetailImage.src = product.img;
+    productDetailPrice.innerText = product.price;
+    productDetailName.innerText = product.name;
+    productDetailInfo.innerText = product.info;
+}
