@@ -49,49 +49,50 @@ document.addEventListener('click', (event) => {
     return; 
     closeAllMenus();
 });
-//Funcion principal creador de los productos en el DOM
-const createCard = (productName, productPrice, imgSrc ) => {
+
+const createCard = (productName, productPrice, imgSrc, productIndex) => {
     const mainCardsContainer = document.querySelector(".cards-container")
 
     //Contenedor principal
     const cardContainer = document.createElement("div");
-    cardContainer.setAttribute('class', 'product-card')
+    cardContainer.setAttribute('class', 'product-card');
+    cardContainer.setAttribute('id', `product-card-${productIndex}`);
     mainCardsContainer.append(cardContainer)
 
-        //Crea el elemento de producto de imagen
-        // el src de la img se obtiene del parametro de la funcion principal (imgSrc)
-        const cardImg = document.createElement('img');
-        const getImgSrc = imgSrc => `./img/${imgSrc}`;
-        cardImg.src = getImgSrc(imgSrc)
-        cardContainer.append(cardImg)
+    //Crea el elemento de producto de imagen
+    // el src de la img se obtiene del parametro de la funcion principal (imgSrc)
+    const cardImg = document.createElement('img');
+    const getImgSrc = imgSrc => `./img/${imgSrc}`;
+    cardImg.src = getImgSrc(imgSrc)
+    cardContainer.append(cardImg)
 
-        //Crea el contenedor del nombre e imagen del producto a (class="product-card")
-        const productInfo = document.createElement("div");
-        productInfo.setAttribute('class', 'product-info')
-        cardContainer.append(productInfo)
+    //Crea el contenedor del nombre e imagen del producto a (class="product-card")
+    const productInfo = document.createElement("div");
+    productInfo.setAttribute('class', 'product-info')
+    cardContainer.append(productInfo)
 
-            //Contenedor de los elementos nombre y precio del producto
-            const createDiv = document.createElement("div");
-            productInfo.append(createDiv);
+    //Contenedor de los elementos nombre y precio del producto
+    const createDiv = document.createElement("div");
+    productInfo.append(createDiv);
 
-                //Crea el elemento del PRECIO del producto
-                //se obtiene del parametro de la funcion principal (productPrice)
-                const productPriceContainer = document.createElement('p');
-                productPriceContainer.innerText = productPrice;
+    //Crea el elemento del PRECIO del producto
+    //se obtiene del parametro de la funcion principal (productPrice)
+    const productPriceContainer = document.createElement('p');
+    productPriceContainer.innerText = productPrice;
 
-                //Crea el elemento del NOMBRE del producto
-                //se obtiene del parametro de la funcion principal (productName)
-                const productNameContainer = document.createElement('p')
-                productNameContainer.innerText = productName
+    //Crea el elemento del NOMBRE del producto
+    //se obtiene del parametro de la funcion principal (productName)
+    const productNameContainer = document.createElement('p')
+    productNameContainer.innerText = productName
 
-                createDiv.append(productPriceContainer, productNameContainer)
-            
-            //Crea el boton "Add to Cart" y lo agrega a su nodo padre (class="product-info").
-            const figureContainer = document.createElement('figure');
-            productInfo.append(figureContainer);
-                const btnAddCart = document.createElement('img')
-                btnAddCart.setAttribute('src', './icons/bt_add_to_cart.svg')
-                figureContainer.append(btnAddCart)
+    createDiv.append(productPriceContainer, productNameContainer)
+
+    //Crea el boton "Add to Cart" y lo agrega a su nodo padre (class="product-info").
+    const figureContainer = document.createElement('figure');
+    productInfo.append(figureContainer);
+    const btnAddCart = document.createElement('img')
+    btnAddCart.setAttribute('src', './icons/bt_add_to_cart.svg')
+    figureContainer.append(btnAddCart)
 } 
 
 const products = [
@@ -100,10 +101,9 @@ const products = [
     {name: "Conejo de Peluche", price: "$40", img: "peluche.jpeg"},
     {name: "Telefono Vintage", price: "$65", img: "telefono.jpeg"},
 ]
+
 products.forEach((product, index) => {
-    createCard(product.name, product.price, product.img);
-    const card = document.querySelector(`#product-card-${index}`);
-    card.setAttribute("data-product-id", index);
+    createCard(product.name, product.price, product.img, index);
 });
 
 const selectProduct = event => {
@@ -114,7 +114,6 @@ const selectProduct = event => {
     showItemSelected(product);
 }
 
-// Iterar sobre cada elemento seleccionado y agregarle el evento de click
 const productCards = document.querySelectorAll('.product-card');
 
 productCards.forEach(productCard => {
