@@ -1,55 +1,32 @@
-const desktopEmailMenu = document.querySelector('.navbar-email');
-const desktopUserAccountMenu = document.querySelector('.desktop-menu')
+const menuEmailDesktop = document.querySelector('.navbar-email');
+const menuUserAccount = document.querySelector('.desktop-menu')
+const menuMobile = document.querySelector('.mobile-menu');
+const menuMobileBtn = document.querySelector('.menu');
+const menuShopCart = document.querySelector('.navbar-shopping-cart');
+const shopCartCointainer = document.querySelector('#shoppingCartContainer')
+//variables de elementos deinformacion de producto
 
-const mobileMenu = document.querySelector('.mobile-menu');
-const iconMenuMobile = document.querySelector('.iconMenuMobile');
 
-const iconShoppingCart = document.querySelector('.icon-shopping-cart');
-const menuShoppingCart = document.querySelector('.product-detail')
 
-const disableMenu = element => {
-    element ? element.classList.add('inactive') : console.log('El elemento no existe')
-}
-const enableMenu = element => {
-    element ? element.classList.toggle('inactive') : console.log('El elemento no existe')
-}
+//Funcion principal para deshabilitar menus
+const toggleClass = element => {
+    if (!element) {
+      console.log('El elemento no existe');
+      return;
+    }
+    element.classList.toggle('inactive');
+  };
+
+//Interruptor del menu de carrito
+menuShopCart.addEventListener('click', () => toggleClass(shopCartCointainer));
+
 //Interruptor del menu de cuenta de usuario al darle click al email de usuario
-const toggleDesktopUserAccountMenu = () => {
-    disableMenu(menuShoppingCart);
-    disableMenu(mobileMenu);
-    enableMenu(desktopUserAccountMenu);
-}
-desktopEmailMenu.addEventListener('click', toggleDesktopUserAccountMenu);
+menuEmailDesktop.addEventListener('click', () => toggleClass(menuUserAccount));
 
-//Interruptor del menu mobile
-const toggleMenuMobile = () => {
-    disableMenu(menuShoppingCart);
-    enableMenu(mobileMenu)
-}
-iconMenuMobile.addEventListener('click', toggleMenuMobile)
+//Interruptor del menu en mobile
+menuMobileBtn.addEventListener('click', () => toggleClass(menuMobile));
 
-//Interruptor del menu de carrito de compras
-const toggleCartMenu = () => {
-    disableMenu(mobileMenu);
-    disableMenu(desktopUserAccountMenu)
-    enableMenu(menuShoppingCart)
-}
-iconShoppingCart.addEventListener('click', toggleCartMenu)
-
-//Cierra todos los menus abiertos en el display al hacer click en cualquier lugar
-const closeAllMenus = () => {
-    disableMenu(desktopUserAccountMenu);
-    disableMenu(mobileMenu);
-    disableMenu(menuShoppingCart);
-}
-document.addEventListener('click', (event) => {
-    if( event.target.classList.contains('iconMenuMobile')
-        || event.target.classList.contains('navbar-email')
-        || event.target.classList.contains('icon-shopping-cart')) 
-    return; 
-    closeAllMenus();
-});
-
+//Funcion para crear productos que es invocada desde products
 const createCard = (productName, productPrice, imgSrc, productIndex, description) => {
     const mainCardsContainer = document.querySelector(".cards-container");
 
@@ -62,7 +39,7 @@ const createCard = (productName, productPrice, imgSrc, productIndex, description
     //Crea el elemento de producto de imagen
     // el src de la img se obtiene del parametro de la funcion principal (imgSrc)
     const cardImg = document.createElement('img');
-    const getImgSrc = imgSrc => `./img/${imgSrc}`;
+    const getImgSrc = imgSrc => `/img/${imgSrc}`;
     cardImg.src = getImgSrc(imgSrc)
     cardImg.setAttribute('id', `product-card__image-${productIndex}`);
     cardContainer.append(cardImg)
@@ -136,32 +113,32 @@ products.forEach((product, index) => {
     createCard(product.name, product.price, product.img, index, product.description);
 });
 
-const productInfoCard = document.querySelector("#productDetailContainer")
+//A partir de aca, captura los datos de los elementos creados anteriormente
+//para añadirlos a productInfoCard
+const productInfoCard = document.querySelector('#productDetail');
+const productCards = document.querySelectorAll('.product-card');
 
-const productInfo = document.querySelectorAll(".product-card");
-productInfo.forEach( (element, index)=> {
-  element.addEventListener('click', event => { 
-    console.log(event.target)
-    enableMenu(productInfoCard)
-    showSelectedProduct(index)
+productCards.forEach((card, index) => {
+  card.addEventListener('click', () => {
+    //console.log(card)
+    toggleClass(productInfoCard);
+    showSelectedProduct(index);
   });
 });
 
-
-
 const showSelectedProduct = index => {
-    const productDetailImage = document.querySelector("#product-detail-image");
-    const productDetailPrice = document.querySelector("#product-detail-price");
-    const productDetailName = document.querySelector("#product-detail-name");
-    const productDetailInfo = document.querySelector("#product-detail-info");
+  //const productImage = document.querySelector('#product-detail-image');
+  const productPrice = document.querySelector('#product-detail-price');
+  const productName = document.querySelector('#product-detail-name');
+  const productInfo = document.querySelector('#product-detail-info');
 
-    const imgSelected = document.querySelector(`#product-card__image-${index}`);
-    const priceSelected = document.querySelector(`#product-card__price-${index}`);
-    const nameSelected = document.querySelector(`#product-card__name-${index}`);
-    const descriptionSelected = document.querySelector(`#product-card__description-${index}`)
+  const selectedImg = document.querySelector(`#product-card__image-${index}`);
+  const selectedPrice = document.querySelector(`#product-card__price-${index}`);
+  const selectedName = document.querySelector(`#product-card__name-${index}`);
+  const selectedDescription = document.querySelector(`#product-card__description-${index}`);
 
-    productDetailImage.src = imgSelected.src;
-    productDetailPrice.innerText = priceSelected.innerText;
-    productDetailName.innerText = nameSelected.innerText;
-    productDetailInfo.innerText = descriptionSelected.innerText;
-}
+  //productImage.src = selectedImg.src;
+  productPrice.innerText = selectedPrice.innerText;
+  productName.innerText = selectedName.innerText;
+  productInfo.innerText = selectedDescription.innerText;
+};
